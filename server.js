@@ -1,6 +1,7 @@
 import express from 'express'
 import connectDB from './db.js'
 import Person from './models/person.js'
+import MenuItem from './models/menu.js'
 
 const app = express()
 app.use(express.json());
@@ -22,7 +23,7 @@ app.post('/person', async (req, res) => {
       user: newPerson
     });
   } catch (error) {
-    console.error("❌ Error:", error); 
+    console.error("❌ Error:", error);
 
     res.status(500).json({
       error: error.message // optional: send real error to Postman
@@ -33,7 +34,7 @@ app.post('/person', async (req, res) => {
 
 
 //GET method to get the person
-app.get('/people',async (req,res) => {
+app.get('/people', async (req, res) => {
   try {
     const data = await Person.find();
     res.status(200).json({
@@ -41,7 +42,44 @@ app.get('/people',async (req,res) => {
       data: data
     });
   } catch (error) {
-    console.error("❌ Error:", error); 
+    console.error("❌ Error:", error);
+
+    res.status(500).json({
+      error: error.message // optional: send real error to Postman
+    });
+  }
+})
+
+app.post('/menu', async (req, res) => {
+  try {
+    const data = req.body;
+
+    const newItem = new MenuItem(data);
+    await newItem.save();
+
+    res.status(200).json({
+      message: "Item saved successfully",
+      item: newItem
+    });
+  } catch (error) {
+    console.error("❌ Error:", error);
+
+    res.status(500).json({
+      error: error.message // optional: send real error to Postman
+    });
+  }
+})
+
+//GET method to get the menu
+app.get('/menu', async (req, res) => {
+  try {
+    const data = await MenuItem.find();
+    res.status(200).json({
+      message: "Item details fetched successfully",
+      data: data
+    });
+  } catch (error) {
+    console.error("❌ Error:", error);
 
     res.status(500).json({
       error: error.message // optional: send real error to Postman
