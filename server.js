@@ -1,3 +1,7 @@
+// Load environment variables FIRST, before any other imports
+import './env.js';
+
+// Now import other modules
 import express from 'express'
 import connectDB from './db.js'
 
@@ -18,6 +22,22 @@ app.use('/person', personRoutes);
 app.use('/menu', menuItemRoutes);
 
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000')
-})
+const PORT = process.env.PORT || 3000;
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error('❌ Error:', err.message);
+  res.status(err.status || 500).json({
+    error: err.message,
+    status: err.status || 500
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: 'Endpoint not found' });
+});
+
+app.listen(PORT, () => {
+  console.log(`✅ Server is running on http://localhost:${PORT}`);
+  console.log(`📊 Using MongoDB: ${process.env.MONGODB_URL ? 'Atlas' : 'Local'}`);
+});

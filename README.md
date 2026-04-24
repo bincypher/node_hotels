@@ -18,25 +18,32 @@ The app provides:
 - Filter staff by role: `chef`, `waiter`, `manager`
 - Filter menu items by taste: `sweet`, `spicy`, `sour`
 - JSON API endpoints for easy testing with Postman or similar tools
+- MongoDB Atlas cloud database integration
+- Input validation middleware for data integrity
+- Centralized configuration management
+- Global error handling and 404 responses
+- Development mode with auto-reload via npm scripts
 
 ## Project Structure
 
 - `server.js` - Main Express entry point
 - `db.js` - MongoDB connection handler
+- `config.js` - Centralized configuration
 - `models/person.js` - Mongoose schema and model for hotel staff
 - `models/menu.js` - Mongoose schema and model for menu items
 - `routes/personRoutes.js` - REST routes for staff endpoints
 - `routes/menuRoutes.js` - REST routes for menu item endpoints
+- `middleware/validators.js` - Request validation middleware
 - `package.json` - Project dependencies and metadata
 - `day01problem*.js`, `day02problem*.js` - Learning practice files from the bootcamp
 
 ## Prerequisites
 
 - Node.js installed
-- MongoDB installed and running locally
+- MongoDB Atlas account (free tier available)
 - `npm` available
 
-> This project assumes a local MongoDB instance at `mongodb://127.0.0.1:27017/hotels`.
+> This project connects to MongoDB Atlas cloud database. Local MongoDB is not required.
 
 ## Installation
 
@@ -47,18 +54,27 @@ The app provides:
 npm install
 ```
 
-## Running the App
-
-Start the server:
+3. Set up environment variables:
+   - Copy `.env.example` to `.env`
+   - Update `.env` with your MongoDB Atlas URL
 
 ```bash
-node server.js
+MONGODB_URL=mongodb+srv://username:password@your-cluster.mongodb.net/hotels?retryWrites=true&w=majority
+PORT=3000
 ```
 
-Or use `nodemon` if installed globally:
+## Running the App
+
+Start the server with production mode:
 
 ```bash
-nodemon server.js
+npm start
+```
+
+Or use `nodemon` for development (auto-restart on file changes):
+
+```bash
+npm run dev
 ```
 
 Then visit:
@@ -173,10 +189,20 @@ curl http://localhost:3000/menu/sweet
 
 1. Start MongoDB before running the server.
 2. Run `npm install` once after cloning.
-3. Start the app with `node server.js` or `nodemon server.js`.
-4. Use JSON body requests for `POST` and `PUT` actions.
-5. Use proper enums for filters: `chef`, `waiter`, `manager`, `sweet`, `spicy`, `sour`.
-6. Check the terminal for MongoDB connectivity and request logging.
+3. Set up `.env` with MongoDB Atlas URL (use `.env.example` as template).
+4. Start the app with `npm start` or `npm run dev` (development mode).
+5. Use JSON body requests for `POST` and `PUT` actions.
+6. Use proper enums for filters: `chef`, `waiter`, `manager`, `sweet`, `spicy`, `sour`.
+7. Check the terminal for MongoDB connectivity and request logging.
+
+## Improvements Made
+
+- ✅ **Centralized Config**: All settings in `config.js` for easier management
+- ✅ **Environment Variables**: MongoDB URL and PORT configurable via `.env`
+- ✅ **Input Validation**: Middleware validates person and menu item data before processing
+- ✅ **Error Handling**: Global error handler catches and formats all errors
+- ✅ **NPM Scripts**: `npm start` and `npm run dev` for convenient server startup
+- ✅ **Better Logging**: Improved console messages for development visibility
 
 ## Future Improvements
 

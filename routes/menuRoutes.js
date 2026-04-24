@@ -1,8 +1,9 @@
 import express from 'express';
 import MenuItem from '../models/menu.js';
 const router = express.Router();
+import { validateMenuItem } from '../middleware/validators.js'
 
-router.post('/', async (req, res) => {
+router.post('/', validateMenuItem, async (req, res) => {
   try {
     const data = req.body;
 

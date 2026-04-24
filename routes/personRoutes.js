@@ -1,8 +1,9 @@
 import express from 'express';
 const router = express.Router();
 import Person from '../models/person.js'
+import { validatePerson } from '../middleware/validators.js'
 
-router.post('/', async (req, res) => {
+router.post('/', validatePerson, async (req, res) => {
   try {
     const data = req.body;
 
