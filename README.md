@@ -65,7 +65,7 @@ PORT=3000
 
 ## Running the App
 
-Start the server with production mode:
+Start the server locally with production mode:
 
 ```bash
 npm start
@@ -77,11 +77,23 @@ Or use `nodemon` for development (auto-restart on file changes):
 npm run dev
 ```
 
-Then visit:
+Then visit locally:
 
 - `http://localhost:3000/` - landing endpoint
 - `http://localhost:3000/person` - staff CRUD endpoints
 - `http://localhost:3000/menu` - menu CRUD endpoints
+
+## Hosted Deployment
+
+This service is deployed at:
+
+- `https://node-hotels-2j1m.onrender.com`
+
+Available API endpoints on the hosted service:
+
+- `https://node-hotels-2j1m.onrender.com/`
+- `https://node-hotels-2j1m.onrender.com/person`
+- `https://node-hotels-2j1m.onrender.com/menu`
 
 ## API Endpoints
 
@@ -216,7 +228,10 @@ curl http://localhost:3000/menu/sweet
 ## FAQ
 
 Q: What database does this use?
-A: MongoDB via Mongoose, connecting to `mongodb://127.0.0.1:27017/hotels`.
+A: MongoDB via Mongoose, using MongoDB Atlas for cloud storage. When running locally it can also fall back to a local MongoDB URL if `MONGODB_URL` is not set.
+
+Q: Is there a live deployment?
+A: Yes — the app is hosted at `https://node-hotels-2j1m.onrender.com`.
 
 Q: How do I change the server port?
 A: Update `app.listen(3000, ...)` in `server.js` or replace with `process.env.PORT || 3000`.
